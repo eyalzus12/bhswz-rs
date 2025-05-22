@@ -1,6 +1,6 @@
 pub struct SwzRandom {
-    index: usize, // this can only be 0-15... no need for usize
     state: [u32; 16],
+    index: u8, // this can only be 0-15
 }
 
 impl SwzRandom {
@@ -20,22 +20,24 @@ impl SwzRandom {
     }
 
     pub fn next(&mut self) -> u32 {
-        let new_index = (self.index + 15) % 16;
+        let index = self.index as usize;
+        // update index
+        self.index = (self.index + 15) % 16;
+        let new_index = self.index as usize;
+
         // compute reslt
-        let a1 = self.state[self.index];
-        let b1 = self.state[(self.index + 13) % 16];
+        let a1 = self.state[index];
+        let b1 = self.state[(index + 13) % 16];
         let c = a1 ^ (a1 << 16) ^ b1 ^ (b1 << 15);
-        let b2 = self.state[(self.index + 9) % 16];
+        let b2 = self.state[(index + 9) % 16];
         let b3 = b2 ^ (b2 >> 11);
         let a2 = b3 ^ c;
         let d = a2 ^ ((a2 << 5) & 0xDA442D24u32);
         let a3 = self.state[new_index];
         let result = a3 ^ (a3 << 2) ^ (b3 << 28) ^ c ^ (c << 18) ^ d;
         // update state
-        self.state[self.index] = a2;
+        self.state[index] = a2;
         self.state[new_index] = result;
-        // update index
-        self.index = new_index;
         // return
         return result;
     }
