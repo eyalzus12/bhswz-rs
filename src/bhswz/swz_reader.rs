@@ -99,13 +99,6 @@ where
 
         return Ok(());
     }
-
-    pub fn read_file_to_string(&mut self) -> Result<String, SwzReaderReadStringError> {
-        let mut buf = Vec::new();
-        self.read_file(&mut buf)?;
-        let str = String::from_utf8(buf)?;
-        return Ok(str);
-    }
 }
 
 fn calculate_key_checksum(key: u32, random: &mut SwzRandom) -> u32 {
@@ -120,7 +113,7 @@ fn calculate_key_checksum(key: u32, random: &mut SwzRandom) -> u32 {
 fn decrypt_buffer(buf: &mut [u8], random: &mut SwzRandom) -> u32 {
     let mut checksum = random.next();
     for i in 0..buf.len() {
-        let xor = ((random.next() >> (i % 16)) & 0xFF) as u8;
+        let xor = (random.next() >> (i % 16)) as u8;
         buf[i] ^= xor;
         checksum = checksum.rotate_right((i % 7 + 1) as u32) ^ (buf[i] as u32);
     }
