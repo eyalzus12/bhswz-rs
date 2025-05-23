@@ -13,10 +13,10 @@ impl<W: Write> SwzWriter<W> {
         let checksum = calculate_key_checksum(key, &mut random);
         writer.write_all(&u32::to_be_bytes(checksum))?;
         writer.write_all(&u32::to_be_bytes(seed))?;
-        return Ok(Self {
+        Ok(Self {
             writer: writer,
             random: random,
-        });
+        })
     }
 
     pub fn write_file(&mut self, file_content: &[u8]) -> Result<(), std::io::Error> {
@@ -33,7 +33,7 @@ impl<W: Write> SwzWriter<W> {
         let mut intermediate = Vec::new();
         let mut encoder = ZlibEncoder::new(&mut intermediate, Compression::best());
         encoder.write_all(file_content)?;
-        drop(encoder);
+        drop(encoder); // drop so we can access intermediate again
 
         let compressed_size: u32 = intermediate.len().try_into().unwrap();
 
@@ -46,6 +46,6 @@ impl<W: Write> SwzWriter<W> {
         self.writer.write_all(&u32::to_be_bytes(checksum))?;
         self.writer.write_all(&intermediate)?;
 
-        return Ok(());
+        Ok(())
     }
 }

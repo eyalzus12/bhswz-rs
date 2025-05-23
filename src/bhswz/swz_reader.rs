@@ -55,10 +55,10 @@ impl<R: Read> SwzReader<R> {
             });
         }
 
-        return Ok(SwzReader {
+        Ok(Self {
             reader: reader,
             random: random,
-        });
+        })
     }
 
     pub fn read_file<W: Write>(&mut self, writer: &mut W) -> Result<bool, SwzReaderReadError> {
@@ -67,12 +67,15 @@ impl<R: Read> SwzReader<R> {
         // read 4 bytes, but if we read 0 at first attempt, say there's no more data
         let initial_read_result = self.reader.read(&mut buf);
         match initial_read_result {
+            // read nothing. finished.
             Ok(0) => {
                 return Ok(false);
             }
+            // read some. read rest and continue.
             Ok(initial_read) => {
                 self.reader.read_exact(&mut buf[initial_read..])?;
             }
+            // error. return it.
             Err(err) => {
                 return Err(err.into());
             }
@@ -110,6 +113,6 @@ impl<R: Read> SwzReader<R> {
             });
         }
 
-        return Ok(true);
+        Ok(true)
     }
 }
