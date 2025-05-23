@@ -61,9 +61,23 @@ impl<R: Read> SwzReader<R> {
         });
     }
 
-    pub fn read_file<W: Write>(&mut self, writer: &mut W) -> Result<(), SwzReaderReadError> {
+    pub fn read_file<W: Write>(&mut self, writer: &mut W) -> Result<bool, SwzReaderReadError> {
         let mut buf = [0u8; 4];
-        self.reader.read_exact(&mut buf)?;
+
+        // read 4 bytes, but if we read 0 at first attempt, say there's no more data
+        let initial_read_result = self.reader.read(&mut buf);
+        match initial_read_result {
+            Ok(0) => {
+                return Ok(false);
+            }
+            Ok(initial_read) => {
+                self.reader.read_exact(&mut buf[initial_read..])?;
+            }
+            Err(err) => {
+                return Err(err.into());
+            }
+        }
+
         let compressed_size = u32::from_be_bytes(buf) ^ self.random.next();
         self.reader.read_exact(&mut buf)?;
         let decompressed_size = u32::from_be_bytes(buf) ^ self.random.next();
@@ -96,6 +110,6 @@ impl<R: Read> SwzReader<R> {
             });
         }
 
-        return Ok(());
+        return Ok(true);
     }
 }

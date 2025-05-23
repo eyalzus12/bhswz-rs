@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut swz_reader = SwzReader::new(reader, 659849070)?;
 
     let mut buf = Vec::new();
-    while let Ok(_) = swz_reader.read_file(&mut buf) {
+    while swz_reader.read_file(&mut buf)? {
         let file_content = str::from_utf8(&buf)?;
         if let Some(file_name) = get_swz_file_name(&file_content) {
             println!("found {file_name}");
