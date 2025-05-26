@@ -22,6 +22,7 @@ name = "bhswz-rs"
 version = "0.1.0"
 dependencies = [
  "flate2",
+ "log",
  "regex",
  "thiserror",
 ]
@@ -50,6 +51,12 @@ dependencies = [
  "crc32fast",
  "miniz_oxide",
 ]
+
+[[package]]
+name = "log"
+version = "0.4.27"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
 name = "memchr"

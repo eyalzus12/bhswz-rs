@@ -5,5 +5,6 @@ edition = "2024"
 
 [dependencies]
 flate2 = "1.1.1"
+log = "0.4.27"
 regex = "1.11.1"
 thiserror = "2.0.12"

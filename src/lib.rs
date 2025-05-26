@@ -24,11 +24,11 @@ pub fn dump_swz(swz_path: &str, output_path: &str, key: u32) -> Result<(), Box<d
     while swz_reader.read_file(&mut buf)? {
         let file_content = str::from_utf8(&buf)?;
         if let Some(file_name) = get_swz_file_name(&file_content) {
-            println!("found {file_name}");
+            log::info!("found {file_name}");
             let path = output_path.join(file_name);
             fs::write(path, &buf)?;
         } else {
-            println!("failed to figure out file name");
+            log::warn!("failed to figure out file name");
         }
 
         buf.clear();
@@ -54,7 +54,7 @@ pub fn repack_swz(unpacked_folder_path: &str, swz_path: &str, key: u32) -> Resul
         if !path.is_file() {
             continue;
         }
-        println!("inserting {:?}", path);
+        log::info!("inserting {:?}", path);
 
         let mut file = File::open(path)?;
         file.read_to_end(&mut buf)?;
