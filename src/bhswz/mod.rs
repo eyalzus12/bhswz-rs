@@ -1,10 +1,10 @@
 mod swz_random;
-pub use swz_random::SwzRandom;
-mod swz_reader;
+use swz_random::SwzRandom;
+pub mod swz_reader;
 pub use swz_reader::SwzReader;
-mod swz_writer;
+pub mod swz_writer;
 pub use swz_writer::SwzWriter;
-mod swz_filename;
+pub mod swz_filename;
 pub use swz_filename::get_swz_file_name;
 mod swz_utils;
 use swz_utils::*;
