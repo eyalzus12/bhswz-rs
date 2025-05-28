@@ -15,7 +15,7 @@ impl SwzRandom {
         }
         return SwzRandom {
             index: 0,
-            state: state,
+            state,
         };
     }
 
