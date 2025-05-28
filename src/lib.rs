@@ -8,12 +8,16 @@
 //! * `SwzReader`: A reader that can dump SWZ files. The 'new' function takes a reader and the SWZ key.
 //! * `SwzWriter`: A writer that can repack the contents of an SWZ file. The 'new' function takes a writer, the SWZ key, and an optional seed.
 //! * `get_swz_file_name`: A function to extract the file name from an SWZ file's content.
+//! * the `keyfinder` module if the "keyfinder" feature is enabled
 
 mod swz_filename;
 mod swz_random;
 mod swz_reader;
 mod swz_utils;
 mod swz_writer;
+
+#[cfg(feature = "keyfinder")]
+pub mod keyfinder;
 
 use swz_random::SwzRandom;
 use swz_utils::*;
