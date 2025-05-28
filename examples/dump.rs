@@ -1,4 +1,4 @@
-use bhswz_rs::{SwzReader, get_swz_file_name};
+use bhswz::{SwzReader, get_swz_file_name};
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::BufReader;

@@ -1,4 +1,4 @@
-use bhswz_rs::SwzWriter;
+use bhswz::SwzWriter;
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::{BufWriter, Read};
