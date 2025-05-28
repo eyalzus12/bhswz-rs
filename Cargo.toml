@@ -1,5 +1,5 @@
 [package]
-name = "bhswz-rs"
+name = "bhswz"
 version = "0.1.0"
 edition = "2024"
 
