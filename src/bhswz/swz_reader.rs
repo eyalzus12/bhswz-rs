@@ -56,8 +56,8 @@ impl<R: Read> SwzReader<R> {
         }
 
         Ok(Self {
-            reader: reader,
-            random: random,
+            reader,
+            random,
         })
     }
 

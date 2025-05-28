@@ -1,7 +1,7 @@
+use bhswz_rs::SwzWriter;
 use std::error::Error;
 use std::fs::{self, File};
 use std::io::{BufWriter, Read};
-use bhswz_rs::{SwzWriter};
 
 fn main() -> Result<(), Box<dyn Error>> {
     const SWZ_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game.swz";

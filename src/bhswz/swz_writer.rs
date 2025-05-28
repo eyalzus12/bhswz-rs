@@ -14,8 +14,8 @@ impl<W: Write> SwzWriter<W> {
         writer.write_all(&u32::to_be_bytes(checksum))?;
         writer.write_all(&u32::to_be_bytes(seed))?;
         Ok(Self {
-            writer: writer,
-            random: random,
+            writer,
+            random,
         })
     }
 

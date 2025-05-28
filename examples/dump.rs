@@ -1,8 +1,8 @@
+use bhswz_rs::{SwzReader, get_swz_file_name};
 use std::error::Error;
 use std::fs::{self, File};
-use std::io::{BufReader};
+use std::io::BufReader;
 use std::path::Path;
-use bhswz_rs::{SwzReader, get_swz_file_name};
 
 fn main() -> Result<(), Box<dyn Error>> {
     const SWZ_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game.swz";
