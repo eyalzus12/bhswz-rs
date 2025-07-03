@@ -4,14 +4,16 @@ use std::fs::{self, File};
 use std::io::{BufWriter, Read};
 
 fn main() -> Result<(), Box<dyn Error>> {
+    const SWZ_KEY: u32 = 685729090; // changes every patch! see find_key.
+    const SWZ_SEED: u32 = 0; // random
+    const FOLDER_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game_out";
     const SWZ_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game.swz";
-    const OUTPUT_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game_out";
 
     let new_swz = BufWriter::new(File::create(SWZ_PATH)?);
-    let mut swz_writer = SwzWriter::new(new_swz, 659849070, 0)?;
+    let mut swz_writer = SwzWriter::new(new_swz, SWZ_KEY, SWZ_SEED)?;
 
     let mut buf = Vec::new();
-    for entry in fs::read_dir(OUTPUT_PATH)? {
+    for entry in fs::read_dir(FOLDER_PATH)? {
         let path = entry.unwrap().path();
         if !path.is_file() {
             continue;

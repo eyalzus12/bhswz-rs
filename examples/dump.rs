@@ -5,6 +5,7 @@ use std::io::BufReader;
 use std::path::Path;
 
 fn main() -> Result<(), Box<dyn Error>> {
+    const SWZ_KEY: u32 = 685729090; // changes every patch! see find_key.
     const SWZ_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game.swz";
     const OUTPUT_PATH: &str = "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla/Game_out";
 
@@ -14,7 +15,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let file = File::open(SWZ_PATH)?;
     let reader = BufReader::new(file);
 
-    let mut swz_reader = SwzReader::new(reader, 659849070)?;
+    let mut swz_reader = SwzReader::new(reader, SWZ_KEY)?;
 
     let mut buf = Vec::new();
     while swz_reader.read_file(&mut buf)? {
